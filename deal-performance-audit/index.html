@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html lang="fr"><comment>&lt;!-- Deal Performance Audit - salesCraft | https://bustercall.substack.com/ --&gt;</comment>
+<head><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deal Performance Audit - salesCraft</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="style.css" rel="stylesheet"/><script defer src="script.js"></script><meta content="Deal Performance Audit - Outil expert pour diagnostiquer vos deals B2B" name="description"/><link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;📊&lt;/text&gt;&lt;/svg&gt;" rel="icon" type="image/svg+xml"/></head>
+<body class="min-h-screen">
+<!-- Header -->
+<header class="bg-white shadow-sm border-b">
+<div class="max-w-4xl mx-auto px-4 py-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold" style="background: var(--orange);">
+                        S
+                    </div>
+<span class="text-xl font-bold text-gray-900">salesCraft</span>
+</div>
+<div class="text-sm text-gray-500">
+<i class="fas fa-users mr-1"></i>
+                    Déjà utilisé par 384 commerciaux B2B
+                </div>
+</div>
+</div>
+</header>
+<!-- Main Container -->
+<div class="max-w-4xl mx-auto px-4 py-8">
+<!-- Hero Section -->
+<div class="text-center mb-12 animate-fade-in" id="hero">
+<h1 class="text-4xl font-bold text-gray-900 mb-4">
+                Deal Performance Audit
+            </h1>
+<p class="text-xl text-gray-600 mb-6 max-w-2xl mx-auto">
+                Évalue la santé de ton deal de vente complexe B2B en 3 minutes. 
+                Reçois un diagnostic précis + plan d'action personnalisé + outils premium.
+            </p>
+<div class="flex items-center justify-center space-x-6 text-sm text-gray-500 mb-8">
+<div class="flex items-center">
+<i class="fas fa-clock mr-2" style="color: var(--blue);"></i>
+                    Temps moyen : 3 minutes
+                </div>
+<div class="flex items-center">
+<i class="fas fa-chart-line mr-2" style="color: var(--green);"></i>
+                    15 critères analysés
+                </div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2" style="color: var(--orange);"></i>
+                    Conseils niveau expert
+                </div>
+</div>
+<button class="btn-primary text-lg px-8 py-4" onclick="startAudit()">
+<i class="fas fa-play mr-2"></i>
+                Commencer l'audit
+            </button>
+</div>
+<!-- Progress Bar -->
+<div class="hidden mb-8" id="progress-container">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium text-gray-700">Progression</span>
+<span class="text-sm text-gray-500" id="progress-text">Question 1/15</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2">
+<div class="progress-bar w-0" id="progress-bar"></div>
+</div>
+</div>
+<!-- Questions Container -->
+<div class="hidden" id="questions-container">
+<div class="glass-card p-8 rounded-2xl question-card" id="question-card">
+<div class="mb-6">
+<h3 class="text-2xl font-bold text-gray-900 mb-3" id="question-title"></h3>
+<p class="text-gray-600" id="question-subtitle"></p>
+</div>
+<div class="space-y-3" id="options-container">
+<!-- Options will be inserted here -->
+</div>
+<div class="flex justify-between mt-8">
+<button class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 hidden" id="prev-btn" onclick="previousQuestion()">
+<i class="fas fa-arrow-left mr-2"></i>Précédent
+                    </button>
+<button class="btn-primary ml-auto" disabled="" id="next-btn" onclick="nextQuestion()">
+                        Suivant<i class="fas fa-arrow-right ml-2"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Results Container -->
+<div class="hidden space-y-8" id="results-container">
+<!-- Score Overview -->
+<div class="glass-card p-8 rounded-2xl text-center">
+<h2 class="text-3xl font-bold text-gray-900 mb-6">
+<i class="fas fa-chart-pie mr-3" style="color: var(--blue);"></i>
+                    Diagnostic de ton deal
+                </h2>
+<div class="flex items-center justify-center mb-6">
+<div class="score-circle mx-auto" id="score-circle">
+<span id="score-value">0%</span>
+</div>
+</div>
+<div class="text-xl font-semibold mb-4" id="score-status"></div>
+<div class="text-gray-600" id="benchmark-text"></div>
+</div>
+<!-- Radar Chart -->
+<div class="glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+<i class="fas fa-radar mr-3" style="color: var(--green);"></i>
+                    Vue 360° de ton deal
+                </h3>
+<div class="radar-container">
+<canvas id="radarChart"></canvas>
+</div>
+</div>
+<!-- Strategic Advice -->
+<div class="glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-gray-900 mb-6">
+<i class="fas fa-lightbulb mr-3" style="color: var(--yellow);"></i>
+                    Tes conseils stratégiques
+                </h3>
+<div class="space-y-4" id="strategic-advice">
+<!-- Advice will be inserted here -->
+</div>
+</div>
+<!-- Action Plan -->
+<div class="glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-gray-900 mb-6">
+<i class="fas fa-tasks mr-3" style="color: var(--orange);"></i>
+                    Ton plan d'action prioritaire
+                </h3>
+<div class="space-y-4" id="action-plan">
+<!-- Action plan will be inserted here -->
+</div>
+</div>
+<!-- Timeline Predictor -->
+<div class="glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-gray-900 mb-6">
+<i class="fas fa-calendar-alt mr-3" style="color: var(--blue);"></i>
+                    Timeline de closing prédictive
+                </h3>
+<div id="timeline-predictor">
+<!-- Timeline will be inserted here -->
+</div>
+</div>
+<!-- Champion Activator -->
+<div class="glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-gray-900 mb-6">
+<i class="fas fa-crown mr-3" style="color: var(--yellow);"></i>
+                    Champion Activator
+                </h3>
+<div id="champion-activator">
+<!-- Champion content will be inserted here -->
+</div>
+</div>
+<!-- Email Generator -->
+<div class="glass-card p-8 rounded-2xl">
+<h3 class="text-2xl font-bold text-gray-900 mb-6">
+<i class="fas fa-envelope mr-3" style="color: var(--green);"></i>
+                    Générateur d'emails personnalisés
+                </h3>
+<div class="space-y-4" id="email-form">
+<!-- Email form will be inserted here -->
+</div>
+<div class="hidden space-y-4 mt-6" id="email-sequences">
+<!-- Generated emails will be inserted here -->
+</div>
+</div>
+<!-- Newsletter CTA -->
+<div class="glass-card p-8 rounded-2xl text-center" style="background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%);">
+<h3 class="text-2xl font-bold text-gray-900 mb-4">
+<i class="fas fa-rocket mr-3"></i>
+                    Reçois des tactiques comme celle-ci chaque semaine
+                </h3>
+<p class="text-gray-700 mb-6">
+                    Rejoint plus de 1200+ commerciaux qui progressent avec salesCraft. 
+                    Chaque mardi, des méthodes concrètes directement applicables.
+                </p>
+<a class="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:shadow-lg transition-all" href="https://bustercall.substack.com/" target="_blank">
+<i class="fas fa-paper-plane mr-2"></i>
+                    S'abonner à la newsletter
+                </a>
+</div>
+</div>
+</div>
+<!-- Swipe Hint -->
+<div class="swipe-hint" id="swipe-hint">
+        Glisse pour naviguer • Utilise 1-4 pour répondre rapidement
+    </div>
+</body>
+</html>
+<script defer id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
